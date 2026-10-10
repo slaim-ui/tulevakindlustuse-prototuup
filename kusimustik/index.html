@@ -1,0 +1,492 @@
+<!doctype html><html lang="et"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>html{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Ühishanke küsitluse raport</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap">
+<style>
+/* Paigutus: tumesinine avaplokk, kus iga vastaja on üks ring; selle all rõngasnäidikud, säästukõver, ootuste ja takistuste tulbad, kanalite punktmaatriks ning järeldused. */
+:root{
+  --bg:#f3f7fb;--surface:#ffffff;--fg:#092d5c;--muted:#5a7594;--line:#d5e2ee;--track:#e6f0f8;
+  --accent:#2385c6;--strong:#092d5c;--soft:#9cc9e8;
+  --hero:#092d5c;--hero-fg:#ffffff;--hero-mid:#5fb4ec;--hero-dim:#a9c3df;--hero-ring:#ffffff1f;
+  --warn:#8a5a00;--warn-bg:#fff4d9;
+  --display:"Bricolage Grotesque","Segoe UI",Arial,sans-serif;
+  --body:Inter,"Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#07111e;--surface:#0f2137;--fg:#e8f0f8;--muted:#9bb3cc;--line:#213a57;--track:#182f4a;
+  --accent:#55abe4;--strong:#cfe8fb;--soft:#2c6da3;
+  --hero:#0b2748;--hero-fg:#ffffff;--hero-mid:#5fb4ec;--hero-dim:#a9c3df;--hero-ring:#ffffff1a;
+  --warn:#f2c66d;--warn-bg:#2e250e;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#07111e;--surface:#0f2137;--fg:#e8f0f8;--muted:#9bb3cc;--line:#213a57;--track:#182f4a;
+  --accent:#55abe4;--strong:#cfe8fb;--soft:#2c6da3;
+  --hero:#0b2748;--hero-fg:#ffffff;--hero-mid:#5fb4ec;--hero-dim:#a9c3df;--hero-ring:#ffffff1a;
+  --warn:#f2c66d;--warn-bg:#2e250e;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5}
+p{margin:0}
+.wrap{width:min(1080px,100%);margin:0 auto;padding-inline:16px}
+.kicker{font-weight:800;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;color:var(--accent);display:flex;gap:10px;align-items:center}
+.kicker:before{content:"";height:2px;width:25px;background:currentColor}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.6vw,38px);letter-spacing:-1px;line-height:1.08;margin:10px 0 8px;text-wrap:balance}
+h3{font-size:15px;margin:0}
+.lede{color:var(--muted);max-width:62ch;margin-bottom:24px}
+
+/* avaplokk */
+.hero{background:var(--hero);color:var(--hero-fg);position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero:before{width:620px;height:620px;right:-210px;top:-230px;border:1px solid var(--hero-ring);box-shadow:0 0 0 70px #ffffff0a,0 0 0 150px #ffffff07,0 0 0 240px #ffffff05}
+.hero:after{width:340px;height:340px;left:-140px;bottom:-200px;background:radial-gradient(closest-side,#2385c655,transparent)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:64px 60px}
+.hero .wrap>*{min-width:0}
+.hero .kicker{color:var(--hero-mid)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,6vw,72px);line-height:.98;letter-spacing:-2.5px;margin:16px 0 20px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--hero-mid)}
+.hero p.intro{font-size:18px;line-height:1.55;color:var(--hero-dim);max-width:52ch}
+.hero .meta{font-size:12.5px;color:var(--hero-dim);margin-top:22px;letter-spacing:.2px}
+.crowd{background:#ffffff0d;border:1px solid var(--hero-ring);border-radius:16px;padding:26px}
+.big{font-family:var(--display);font-weight:800;font-size:clamp(84px,13vw,132px);line-height:.85;letter-spacing:-6px;font-variant-numeric:tabular-nums}
+.big small{font-size:.36em;letter-spacing:-1px;color:var(--hero-dim);font-weight:500}
+.crowd .cap{font-size:14px;color:var(--hero-dim);margin:10px 0 20px}
+.people{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;max-width:360px}
+.people i{aspect-ratio:1;border-radius:50%;display:block;animation:pop .5s both}
+.people i.a{background:var(--hero-fg)}
+.people i.b{background:var(--hero-mid)}
+.people i.c{border:2px dashed var(--hero-dim)}
+.people i.n{border:2px solid var(--hero-ring)}
+.key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--hero-dim);margin-top:18px}
+.key span{display:flex;align-items:center;gap:7px}
+.key i{width:11px;height:11px;border-radius:50%;flex:none}
+.key b{color:var(--hero-fg);font-variant-numeric:tabular-nums}
+
+main.wrap{display:flex;flex-direction:column;gap:64px;padding-block:0 72px}
+
+/* rõngad */
+.rings{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-34px;position:relative;z-index:2}
+.ring{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:center;min-width:0;box-shadow:0 12px 30px #001a3814}
+.ring svg{width:76px;height:76px;flex:none;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9}
+.ring .bgc{stroke:var(--track)}
+.ring .fgc{stroke:var(--accent);stroke-linecap:round;animation:draw 1.1s cubic-bezier(.2,.7,.2,1) both}
+.ring b{font-family:var(--display);font-weight:800;font-size:30px;line-height:1;letter-spacing:-1px;display:block;font-variant-numeric:tabular-nums}
+.ring b small{font-size:15px;color:var(--muted);font-weight:500;letter-spacing:0}
+.ring span{font-size:12.5px;color:var(--muted);display:block;margin-top:5px;line-height:1.35}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0}
+.sub{font-size:13px;color:var(--muted);margin:2px 0 16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* säästukõver */
+.curve{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:center}
+.curve>*{min-width:0}
+.curve svg{width:100%;height:auto;display:block}
+.curve text{font-family:var(--body);font-size:12px;fill:var(--muted)}
+.curve text.v{fill:var(--fg);font-weight:800;font-size:13px}
+.curve .grid{stroke:var(--line);stroke-width:1}
+.curve .area{fill:var(--accent);opacity:.16}
+.curve .step{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-dasharray:900;animation:trace 1.6s ease-out both}
+.curve .mark{stroke:var(--strong);stroke-width:1.5;stroke-dasharray:4 4}
+.curve .dot{fill:var(--surface);stroke:var(--accent);stroke-width:3}
+.curve .dot.hi{fill:var(--strong);stroke:var(--surface);stroke-width:2}
+.callout b{font-family:var(--display);font-weight:800;font-size:64px;line-height:.9;letter-spacing:-3px;display:block}
+.callout b small{font-size:26px;letter-spacing:-.5px;color:var(--muted);font-weight:500}
+.callout p{color:var(--muted);font-size:14.5px;margin-top:10px}
+.callout p strong{color:var(--fg)}
+
+/* tulbad */
+.rows{display:flex;flex-direction:column;gap:13px}
+.row{display:grid;grid-template-columns:1fr auto;gap:5px 12px;font-size:14px}
+.row .n{font-variant-numeric:tabular-nums;font-weight:800}
+.row .n small{font-weight:500;color:var(--muted);font-size:12px;margin-left:3px}
+.row .t{grid-column:1/-1;height:14px;background:var(--track);border-radius:0 7px 7px 0;overflow:hidden}
+.row .t i{display:block;height:100%;background:var(--accent);border-radius:0 7px 7px 0;animation:grow .9s cubic-bezier(.2,.7,.2,1) both;transform-origin:left}
+.row.top .t i{background:var(--strong)}
+.row:hover .t i{filter:brightness(1.15)}
+
+/* 3 aastat */
+.split{display:flex;gap:2px;height:54px;margin-top:4px}
+.split div{display:flex;align-items:center;padding:0 16px;border-radius:8px;font-weight:800;font-size:14px;min-width:0;white-space:nowrap}
+.split .y{background:var(--strong);color:var(--surface);flex:20}
+.split .m{background:var(--accent);color:var(--surface);flex:15}
+.split .o{background:var(--soft);color:var(--fg)}
+.split b{font-family:var(--display);font-size:26px;margin-right:8px;letter-spacing:-1px}
+
+/* kanalite maatriks */
+.matrix{display:flex;flex-direction:column}
+.ch{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.3fr);gap:12px 24px;align-items:center;padding:18px 0;border-top:1px solid var(--line)}
+.ch:first-child{border-top:0;padding-top:4px}
+.ch strong{display:block;font-size:15px}
+.ch small{color:var(--muted);font-size:12.5px}
+.dots{display:flex;flex-wrap:wrap;gap:8px}
+.dots i{width:22px;height:22px;border-radius:50%;display:block;flex:none;animation:pop .5s both}
+.d1{background:var(--strong)}.d2{background:var(--accent)}.d3{background:var(--soft)}.d4{background:var(--track);border:2px solid var(--soft)}.d5{border:2px dashed var(--muted)}
+.ch p{font-size:13.5px;color:var(--muted)}
+.ch p b{color:var(--fg)}
+.mkey{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.mkey span{display:flex;align-items:center;gap:7px}
+.mkey i{width:12px;height:12px;border-radius:50%;flex:none}
+.mkey b{color:var(--fg);font-variant-numeric:tabular-nums}
+
+/* järeldused */
+.find{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.f{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
+.f b.num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;letter-spacing:-2px;color:var(--accent);display:block;margin-bottom:12px;font-variant-numeric:tabular-nums}
+.f b.num small{font-size:20px;color:var(--muted);font-weight:500;letter-spacing:0}
+.f p{font-size:14px;color:var(--muted);margin-top:6px}
+
+/* muutus */
+.delta{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.dl{padding:4px 18px;border-left:1px solid var(--line);min-width:0}
+.dl:first-child{padding-left:0;border-left:0}
+.dl .ar{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-1px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dl .ar s{text-decoration:none;color:var(--muted);font-weight:500}
+.dl .ar u{text-decoration:none;color:var(--accent);margin:0 4px}
+.dl p{font-size:13px;color:var(--muted);margin-top:4px}
+.note{background:var(--warn-bg);color:var(--warn);border-radius:12px;padding:16px 18px;font-size:14px}
+.note b{display:block;margin-bottom:2px}
+
+@keyframes grow{from{transform:scaleX(0)}}
+@keyframes draw{from{stroke-dashoffset:239}}
+@keyframes trace{from{stroke-dashoffset:900}to{stroke-dashoffset:0}}
+@keyframes pop{from{transform:scale(0);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:32px;padding-block:44px 64px}
+  .rings{grid-template-columns:1fr 1fr}
+  .two,.curve{grid-template-columns:1fr}
+  .find{grid-template-columns:1fr}
+  .ch{grid-template-columns:1fr}
+  .delta{grid-template-columns:1fr 1fr;gap:20px 0}
+  .dl:nth-child(3){padding-left:0;border-left:0}
+  main.wrap{gap:48px}
+}
+@media (max-width:460px){
+  .rings{grid-template-columns:1fr}
+  .split div{padding:0 10px;font-size:12.5px}
+  .card{padding:18px}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker">Tuleva · kodukindlustuse ühishange</div>
+      <h1>Liikmed tahavad ühishanget, <em>kui sääst on tuntav</em></h1>
+      <p class="intro" id="intro"></p>
+      <p class="meta" id="meta"></p>
+    </div>
+    <div class="crowd">
+      <div class="big" id="big"></div>
+      <p class="cap">vastajat kaaluks ühishankega liitumist. Iga ring on üks vastaja.</p>
+      <div class="people" id="people"></div>
+      <div class="key" id="key"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="rings" id="rings"></section>
+
+  <section>
+    <div class="kicker">Hinnalävi</div>
+    <h2 id="h2curve"></h2>
+    <p class="lede">Kõver näitab, mitu vastajat oleks antud aastase säästu juures valmis kindlustust vahetama, eeldusel et kaitse ei halvene.</p>
+    <div class="card curve">
+      <div id="curve"></div>
+      <div class="callout" id="callout"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Ootused ja takistused</div>
+    <h2>Mida oodatakse ja mis hoiab tagasi</h2>
+    <p class="lede" id="ledeBars"></p>
+    <div class="two" id="bars"></div>
+  </section>
+
+  <section>
+    <div class="kicker">Ostukanal ja ajastus</div>
+    <h2>Millal eri kanalite kliendid liituda saaksid</h2>
+    <p class="lede">Iga ring on üks vastaja. Toon näitab, millal ta saaks ühispakkumisega liituda.</p>
+    <div class="card">
+      <div class="mkey" id="mkey"></div>
+      <div class="matrix" id="matrix"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Sidumine</div>
+    <h2 id="h2commit"></h2>
+    <p class="lede" id="ledeCommit"></p>
+    <div class="card">
+      <h3>Kas jääksid pakkumise juurde vähemalt 3 aastaks?</h3>
+      <p class="sub" id="subCommit"></p>
+      <div class="split" id="split"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Järeldused</div>
+    <h2>Mida see hanke jaoks tähendab</h2>
+    <div class="find" id="find"></div>
+  </section>
+
+  <div class="note" id="note"></div>
+</main>
+
+<script>
+// Vastused loetakse lehe avamisel otse Google Sheetsi lehelt „Form Responses 1“ (vt SHEET_ID allpool).
+// See massiiv on varukoopia juhuks, kui tabelit ei saa lugeda (tabel pole lingiga jagatud või võrk puudub).
+var FALLBACK=[
+["10/10/2026 14:07:05","Jah","Otse kindlustusseltsist","Jah, kindlasti","Alla 20 €","Jah","Mugav digitaalne lepingu sõlmimine ja haldamine, Pikaajaline hinnastabiilsus","Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 14:08:26","Jah","Otse kindlustusseltsist","Jah, kindlasti","Alla 20 €","Jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 14:13:05","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","50–99 €","Jah","Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused","Võimalik rahaline sääst oleks liiga väike","Hiljem kui aasta pärast"],
+["10/10/2026 14:46:06","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","20–49 €","Pigem jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Praegune kindlustus on seotud kodulaenuga, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 14:48:47","Jah","Kindlustusmaakleri kaudu","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Võimalik rahaline sääst oleks liiga väike, Ma ei soovi end pikaajaliselt siduda","4–12 kuu jooksul"],
+["10/10/2026 14:53:36","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 14:57:23","Jah","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Võimalik rahaline sääst oleks liiga väike, Ma ei soovi end pikaajaliselt siduda","Esimesel võimalusel"],
+["10/10/2026 14:59:50","Jah","Otse kindlustusseltsist","Jah, kindlasti","50–99 €","Jah","Soodsam hind, Pikaajaline hinnastabiilsus","Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 15:03:37","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","50–99 €","Pigem jah","Lihtsad ja arusaadavad tingimused","Praegune kindlustus on seotud kodulaenuga, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 15:05:52","Jah","Kindlustusmaakleri kaudu","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 15:08:27","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","20–49 €","Jah","Soodsam hind","Miski ei takistaks","Ei oska öelda"],
+["10/10/2026 15:08:53","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","50–99 €","Pigem jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Praegune kindlustus on seotud kodulaenuga","Ei oska öelda"],
+["10/10/2026 15:10:54","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","Alla 20 €","Jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Kindlustuse vahetamine tundub keeruline","Ei oska öelda"],
+["10/10/2026 15:12:52","Ei, aga kaalun liitumist","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Muu","Esimesel võimalusel"],
+["10/10/2026 15:14:42","Jah","Otse kindlustusseltsist","Pigem jah","20–49 €","Pigem jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 15:15:15","Jah","Otse kindlustusseltsist","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Mugav digitaalne lepingu sõlmimine ja haldamine","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Praegune kindlustus on seotud kodulaenuga","4–12 kuu jooksul"],
+["10/10/2026 15:15:54","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Praegune kindlustus on seotud kodulaenuga, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 15:18:37","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Mugav digitaalne lepingu sõlmimine ja haldamine","Miski ei takistaks","3 kuu jooksul"],
+["10/10/2026 15:21:41","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Olen praeguse kindlustusega rahul, Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 15:29:23","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 15:29:26","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Võimalik rahaline sääst oleks liiga väike, Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 15:30:02","Jah","Otse kindlustusseltsist","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 15:30:05","Jah","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 15:31:13","Jah","Otse kindlustusseltsist","Jah, kindlasti","50–99 €","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 15:34:28","Jah","Panga kaudu, koos kodulaenuga","Võib-olla, sõltub hinnast ja tingimustest","100 € või rohkem","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 15:34:45","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 15:46:39","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks","3 kuu jooksul"],
+["10/10/2026 15:51:10","Jah","Otse kindlustusseltsist","Pigem jah","50–99 €","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Miski ei takistaks","3 kuu jooksul"],
+["10/10/2026 15:53:38","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses","Esimesel võimalusel"],
+["10/10/2026 15:57:06","Jah","Otse kindlustusseltsist","Jah, kindlasti","50–99 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks","3 kuu jooksul"],
+["10/10/2026 15:57:15","Jah","Otse kindlustusseltsist","Pigem jah","50–99 €","Pigem jah","Kiire ja õiglane kahjukäsitlus, Pikaajaline hinnastabiilsus","Olen praeguse kindlustusega rahul, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 15:57:17","Jah","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Kindlustuse vahetamine tundub keeruline, Võimalik rahaline sääst oleks liiga väike","Esimesel võimalusel"],
+["10/10/2026 16:00:46","Jah","Otse kindlustusseltsist","Jah, kindlasti","50–99 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Võimalik rahaline sääst oleks liiga väike","Esimesel võimalusel"],
+["10/10/2026 16:04:04","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Võimalik rahaline sääst oleks liiga väike","Esimesel võimalusel"],
+["10/10/2026 16:05:46","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","20–49 €","Pigem jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Praegune kindlustus on seotud kodulaenuga, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 16:12:33","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Alla 20 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 16:16:31","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Pikaajaline hinnastabiilsus","Ma ei soovi end pikaajaliselt siduda, Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 16:20:59","Jah","Mul ei ole kodukindlustust","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 16:24:32","Ei","Panga kaudu, koos kodulaenuga","Võib-olla, sõltub hinnast ja tingimustest","20–49 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Olen praeguse kindlustusega rahul, Võimalik rahaline sääst oleks liiga väike","3 kuu jooksul"],
+["10/10/2026 16:24:48","Ei, aga kaalun liitumist","Mul ei ole kodukindlustust","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","Esimesel võimalusel"],
+["10/10/2026 16:25:27","Jah","Otse kindlustusseltsist","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Ma ei soovi end pikaajaliselt siduda","4–12 kuu jooksul"],
+["10/10/2026 16:29:15","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus","Praegune kindlustus on seotud kodulaenuga, Võimalik rahaline sääst oleks liiga väike","3 kuu jooksul"],
+["10/10/2026 16:35:20","Jah","Panga kaudu, koos kodulaenuga","Võib-olla, sõltub hinnast ja tingimustest","Ei sooviks kindlustust vahetada","Pigem ei","Laiem kindlustuskaitse ja vähem välistusi, Mugav digitaalne lepingu sõlmimine ja haldamine","Olen praeguse kindlustusega rahul, Kahtlen uue kindlustuse tingimustes või kahjukäsitluses","Ei oska öelda"],
+["10/10/2026 16:35:31","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Mugav digitaalne lepingu sõlmimine ja haldamine","Olen praeguse kindlustusega rahul, Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 16:37:28","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Võimalik rahaline sääst oleks liiga väike, Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 16:39:34","Jah","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 16:45:37","Jah","Otse kindlustusseltsist","Jah, kindlasti","50–99 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","3 kuu jooksul"],
+["10/10/2026 16:46:22","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","100 € või rohkem","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Kindlustuse vahetamine tundub keeruline, Praegune kindlustus on seotud kodulaenuga","Ei oska öelda"],
+["10/10/2026 16:52:35","Jah","Panga kaudu, koos kodulaenuga","Võib-olla, sõltub hinnast ja tingimustest","Alla 20 €","Pigem ei","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Võimalik rahaline sääst oleks liiga väike, Ma ei soovi end pikaajaliselt siduda","4–12 kuu jooksul"],
+["10/10/2026 16:54:44","Jah","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Olen praeguse kindlustusega rahul, Kahtlen uue kindlustuse tingimustes või kahjukäsitluses","4–12 kuu jooksul"],
+["10/10/2026 16:58:48","Jah","Panga kaudu, koos kodulaenuga","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 17:00:05","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Olen praeguse kindlustusega rahul, Kahtlen uue kindlustuse tingimustes või kahjukäsitluses","Esimesel võimalusel"],
+["10/10/2026 17:10:19","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","100 € või rohkem","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Praegune kindlustus on seotud kodulaenuga","Ei oska öelda"],
+["10/10/2026 17:10:32","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Kindlustuse vahetamine tundub keeruline, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 17:14:49","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Lihtsad ja arusaadavad tingimused, Pikaajaline hinnastabiilsus","Miski ei takistaks, Muu","Esimesel võimalusel"],
+["10/10/2026 17:27:06","Ei, aga kaalun liitumist","Panga kaudu, koos kodulaenuga","Jah, kindlasti","50–99 €","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 17:38:10","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","3 kuu jooksul"],
+["10/10/2026 17:39:17","Jah","Otse kindlustusseltsist","Võib-olla, sõltub hinnast ja tingimustest","50–99 €","Pigem jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","Hiljem kui aasta pärast"],
+["10/10/2026 17:39:44","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 17:46:08","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","20–49 €","Pigem jah","Lihtsad ja arusaadavad tingimused, Pikaajaline hinnastabiilsus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Praegune kindlustus on seotud kodulaenuga","3 kuu jooksul"],
+["10/10/2026 17:47:52","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","100 € või rohkem","Pigem jah","Lihtsad ja arusaadavad tingimused, Pikaajaline hinnastabiilsus","Kindlustuse vahetamine tundub keeruline, Võimalik rahaline sääst oleks liiga väike","Esimesel võimalusel"],
+["10/10/2026 17:54:11","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks, Muu","4–12 kuu jooksul"],
+["10/10/2026 17:55:32","Jah","Kindlustusmaakleri kaudu","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kindlustuse vahetamine tundub keeruline, Võimalik rahaline sääst oleks liiga väike","Ei oska öelda"],
+["10/10/2026 17:59:04","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Olen praeguse kindlustusega rahul, Praegune kindlustus on seotud kodulaenuga","Ei oska öelda"],
+["10/10/2026 18:00:03","Jah","Otse kindlustusseltsist","Võib-olla, sõltub hinnast ja tingimustest","50–99 €","Pigem jah","Soodsam hind, Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused","Olen praeguse kindlustusega rahul, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 18:02:40","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused","Kindlustuse vahetamine tundub keeruline, Miski ei takistaks","Ei oska öelda"],
+["10/10/2026 18:07:31","Ei","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Miski ei takistaks, Muu","Ei oska öelda"],
+["10/10/2026 18:23:00","Jah","Panga kaudu, koos kodulaenuga","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused, Mugav digitaalne lepingu sõlmimine ja haldamine, Pikaajaline hinnastabiilsus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Ma ei soovi end pikaajaliselt siduda","4–12 kuu jooksul"],
+["10/10/2026 18:33:05","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks, Muu","Esimesel võimalusel"],
+["10/10/2026 18:39:22","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused, Mugav digitaalne lepingu sõlmimine ja haldamine","Miski ei takistaks, Muu","Esimesel võimalusel"],
+["10/10/2026 18:39:27","Jah","Otse kindlustusseltsist","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Võimalik rahaline sääst oleks liiga väike, Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 18:40:44","Jah","Otse kindlustusseltsist","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused, Pikaajaline hinnastabiilsus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Miski ei takistaks","3 kuu jooksul"],
+["10/10/2026 18:44:41","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Võimalik rahaline sääst oleks liiga väike, Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 19:06:13","Jah","Otse kindlustusseltsist","Võib-olla, sõltub hinnast ja tingimustest","100 € või rohkem","Pigem jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus, Mugav digitaalne lepingu sõlmimine ja haldamine","Olen praeguse kindlustusega rahul, Kindlustuse vahetamine tundub keeruline, Võimalik rahaline sääst oleks liiga väike","4–12 kuu jooksul"],
+["10/10/2026 19:07:40","Jah","Panga kaudu, koos kodulaenuga","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Lihtsad ja arusaadavad tingimused, Mugav digitaalne lepingu sõlmimine ja haldamine, Pikaajaline hinnastabiilsus","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Kindlustuse vahetamine tundub keeruline, Ma ei soovi end pikaajaliselt siduda","Esimesel võimalusel"],
+["10/10/2026 19:12:19","Jah","Kindlustusmaakleri kaudu","Jah, kindlasti","50–99 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused, Pikaajaline hinnastabiilsus","Praegune kindlustus on seotud kodulaenuga, Võimalik rahaline sääst oleks liiga väike","Hiljem kui aasta pärast"],
+["10/10/2026 19:14:57","Ei, aga kaalun liitumist","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Lihtsad ja arusaadavad tingimused","Kindlustuse vahetamine tundub keeruline, Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 19:15:22","Jah","Panga kaudu, koos kodulaenuga","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Soodsam hind, Pikaajaline hinnastabiilsus","Võimalik rahaline sääst oleks liiga väike, Miski ei takistaks","Esimesel võimalusel"],
+["10/10/2026 19:21:06","Jah","Otse kindlustusseltsist","Pigem jah","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Pigem jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kindlustuse vahetamine tundub keeruline, Miski ei takistaks","4–12 kuu jooksul"],
+["10/10/2026 19:25:55","Jah","Otse kindlustusseltsist","Jah, kindlasti","50–99 €","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus","Kindlustuse vahetamine tundub keeruline, Võimalik rahaline sääst oleks liiga väike","Esimesel võimalusel"],
+["10/10/2026 19:35:16","Jah","Otse kindlustusseltsist","Jah, kindlasti","20–49 €","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi","Miski ei takistaks, Muu","3 kuu jooksul"],
+["10/10/2026 19:36:33","Jah","Otse kindlustusseltsist","Võib-olla, sõltub hinnast ja tingimustest","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused","Kahtlen uue kindlustuse tingimustes või kahjukäsitluses, Miski ei takistaks","Hiljem kui aasta pärast"],
+["10/10/2026 19:39:08","Jah","Otse kindlustusseltsist","Jah, kindlasti","Kaaluksin vahetamist ka sama hinna korral, kui kindlustuskaitse paraneb","Jah","Soodsam hind, Laiem kindlustuskaitse ja vähem välistusi, Kiire ja õiglane kahjukäsitlus, Lihtsad ja arusaadavad tingimused, Mugav digitaalne lepingu sõlmimine ja haldamine, Pikaajaline hinnastabiilsus","Võimalik rahaline sääst oleks liiga väike, Miski ei takistaks","Esimesel võimalusel"]
+];
+
+function render(ROWS,live){
+var $=function(id){return document.getElementById(id)};
+["people","key","rings","bars","mkey","matrix","split","find","note"].forEach(function(id){$(id).innerHTML=""});
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function has(s,x){return s.indexOf(x)>=0}
+function vn(n){return n+" vastaja"+(n===1?"":"t")}
+var N=ROWS.length;
+if(!N){$("intro").textContent="Vastuseid veel ei ole.";return}
+function pct(n){return Math.round(n/N*100)}
+
+// iga rida lihtsateks koodideks
+var R=ROWS.map(function(r){
+  var it=r[3]||"",s=r[4]||"",c=r[5]||"",t=r[8]||"",ch=r[2]||"";
+  return {
+    member:(r[1]||"").indexOf("Jah")===0,
+    ch:has(ch,"Otse")?"o":has(ch,"Panga")?"p":has(ch,"maakleri")?"m":"x",
+    i:it.indexOf("Jah")===0?"k":it.indexOf("Pigem jah")===0?"p":it.indexOf("Võib")===0?"v":"n",
+    s:has(s,"sama hinna")?0:has(s,"Alla 20")?20:/20.49/.test(s)?50:/50.99/.test(s)?100:has(s,"100")?101:null,
+    c:c==="Jah"?"j":c==="Pigem jah"?"p":"o",
+    t:has(t,"Esimesel")?1:has(t,"3 kuu")?2:/4.12/.test(t)?3:has(t,"Hiljem")?4:5,
+    imp:r[6]||"",bar:r[7]||"",
+    time:((r[0]||"").split(" ")[1]||"").slice(0,5).replace(":",".")
+  };
+});
+function cnt(f,rows){return (rows||R).filter(f).length}
+// [otsitav tekst, silt diagrammil, sõnastus lauses]
+var IMP=[["Soodsam hind","Soodsam hind","soodsam hind"],["kahjukäsitlus","Kiire ja õiglane kahjukäsitlus","kiire kahjukäsitlus"],["Laiem","Laiem kaitse ja vähem välistusi","laiem kaitse"],["Lihtsad","Lihtsad ja arusaadavad tingimused","lihtsad tingimused"],["hinnastabiilsus","Pikaajaline hinnastabiilsus","hinnastabiilsus"],["digitaalne","Mugav digitaalne haldamine","mugav digitaalne haldamine"]];
+var BAR=[["liiga väike","Sääst oleks liiga väike","kartus, et sääst jääb liiga väikeseks"],["Miski ei takistaks","Miski ei takistaks",""],["Kahtlen","Kahtleb tingimustes või kahjukäsitluses","kahtlus tingimustes või kahjukäsitluses"],["kodulaenuga","Kindlustus on seotud kodulaenuga","seotus kodulaenuga"],["siduda","Ei soovi end pikalt siduda","soovimatus end pikalt siduda"],["rahul","On praeguse kindlustusega rahul","rahulolu praeguse kindlustusega"],["keeruline","Vahetamine tundub keeruline","vahetamise keerukus"],["Muu","Muu","muu põhjus"]];
+function tally(list,key,rows){
+  return list.map(function(l){return {k:l[0],label:l[1],say:l[2],n:cnt(function(r){return has(r[key],l[0])},rows)}}).sort(function(a,b){return b.n-a.n});
+}
+function realBars(rows){return tally(BAR,"bar",rows).filter(function(b){return b.k!=="Miski ei takistaks"})}
+var imp=tally(IMP,"imp"),bars=tally(BAR,"bar"),topBar=realBars()[0];
+function barN(k){return bars.filter(function(b){return b.k===k})[0].n}
+
+// avaplokk
+var nk=cnt(function(r){return r.i==="k"}),np=cnt(function(r){return r.i==="p"}),nv=cnt(function(r){return r.i==="v"}),nn=cnt(function(r){return r.i==="n"}),yes=nk+np;
+$("big").innerHTML=yes+"<small>/"+N+"</small>";
+$("intro").textContent=(nn?vn(nn)+" välistas liitumise. ":"Keegi ei välistanud liitumist. ")+"Kõige sagedasem ootus on "+imp[0].say+", järgnevad "+imp[1].say+" ja "+imp[2].say+". Suurim takistus on "+topBar.say+": seda nimetas "+vn(topBar.n)+".";
+$("meta").textContent=N+" vastust · viimane vastus kell "+R[N-1].time+(live?" · andmed uuenevad ise, otse küsitluse tabelist":" · salvestatud seis, otseühendus tabeliga puudub");
+var ppl=$("people");ppl.style.gridTemplateColumns="repeat("+(N<=42?7:N<=90?10:14)+",1fr)";
+var names={k:["a","Jah, kindlasti"],p:["b","Pigem jah"],v:["c","Võib-olla, sõltub hinnast ja tingimustest"],n:["n","Ei"]};
+"kpvn".split("").forEach(function(code){
+  R.filter(function(r){return r.i===code}).forEach(function(){var d=el("i",names[code][0]);d.title=names[code][1];d.style.animationDelay=Math.min(ppl.children.length*25,1200)+"ms";ppl.appendChild(d)});
+});
+[[nk,"jah, kindlasti","background:var(--hero-fg)"],[np,"pigem jah","background:var(--hero-mid)"],[nv,"võib-olla","border:2px dashed var(--hero-dim)"],[nn,"ei","border:2px solid var(--hero-ring)"]].forEach(function(k){
+  var s=el("span"),i=el("i");i.style.cssText=k[2];s.appendChild(i);s.appendChild(el("b","",k[0]));s.appendChild(document.createTextNode(k[1]));$("key").appendChild(s);
+});
+
+// rõngad
+var c0=cnt(function(r){return r.s===0}),c20=cnt(function(r){return r.s!==null&&r.s<=20}),c50=cnt(function(r){return r.s!==null&&r.s<=50}),c100=cnt(function(r){return r.s!==null&&r.s<=100}),over=cnt(function(r){return r.s===101}),noSwitch=cnt(function(r){return r.s===null});
+var cj=cnt(function(r){return r.c==="j"}),cp=cnt(function(r){return r.c==="p"}),co=N-cj-cp;
+var q3=cnt(function(r){return r.t<=2});
+var C=2*Math.PI*38;
+[[yes,"kaaluks liitumist („jah, kindlasti“ või „pigem jah“)"],[c50,"vahetaks kuni 50 € aastase säästu korral"],[cj+cp,"on valmis siduma end 3 aastaks („jah“ või „pigem jah“)"],[q3,"liituks kolme kuu jooksul"]].forEach(function(r,i){
+  var box=el("div","ring");
+  box.innerHTML='<svg viewBox="0 0 90 90" aria-hidden="true"><circle class="bgc" cx="45" cy="45" r="38"/><circle class="fgc" cx="45" cy="45" r="38" stroke-dasharray="'+(C*r[0]/N).toFixed(1)+' '+C.toFixed(1)+'" style="animation-delay:'+(i*120)+'ms"/></svg>';
+  var t=el("div"),b=el("b","",pct(r[0]));b.appendChild(el("small","","%"));t.appendChild(b);t.appendChild(el("span","",vn(r[0])+" "+N+"-st "+r[1]));
+  box.appendChild(t);$("rings").appendChild(box);
+});
+
+// säästukõver
+function y(v){return (250-210*v/N).toFixed(1)}
+var step=Math.max(1,Math.ceil(N/5)),g="";
+for(var tk=0;tk<=N;tk+=step){g+='<line class="grid" x1="44" x2="464" y1="'+y(tk)+'" y2="'+y(tk)+'"/><text x="36" y="'+(+y(tk)+4)+'" text-anchor="end">'+tk+'</text>'}
+var pts=[[44,c0,"Sama hinnaga, kui kaitse paraneb"],[114,c20,"20 € säästuga"],[219,c50,"50 € säästuga"],[394,c100,"100 € säästuga"]];
+var path="M44,"+y(c0)+" H114 V"+y(c20)+" H219 V"+y(c50)+" H394 V"+y(c100)+" H464";
+var dots=pts.map(function(p,i){return '<circle class="dot'+(i===2?" hi":"")+'" cx="'+p[0]+'" cy="'+y(p[1])+'" r="'+(i===2?7:5)+'"><title>'+p[2]+": "+vn(p[1])+" ("+pct(p[1])+'%)</title></circle><text class="v" x="'+(p[0]+(i===2?11:8))+'" y="'+(+y(p[1])-9)+'">'+p[1]+(i===2?" vastajat":"")+'</text>'}).join("");
+$("curve").innerHTML='<svg viewBox="0 0 480 290" role="img" aria-label="Kumulatiivne kõver: sama hinnaga vahetaks '+c0+', 20 € säästuga '+c20+', 50 € säästuga '+c50+' ja 100 € säästuga '+c100+' vastajat '+N+'-st.">'+g+'<path class="area" d="'+path.replace("M44,","M44,250 V")+' V250 Z"/><line class="mark" x1="219" x2="219" y1="'+y(c50)+'" y2="250"/><path class="step" d="'+path+'"/>'+dots+'<text x="44" y="272" text-anchor="middle">sama hind</text><text x="114" y="272" text-anchor="middle">20 €</text><text x="219" y="272" text-anchor="middle">50 €</text><text x="394" y="272" text-anchor="middle">100 €</text><text x="464" y="288" text-anchor="end">aastane sääst</text></svg>';
+$("h2curve").textContent="50 € sääst paneks vahetama "+pct(c50)+"% vastajatest";
+$("callout").innerHTML="<b>"+pct(c50)+"<small>%</small></b><p><strong>"+vn(c50)+" "+N+"-st</strong> vahetaks kindlustust, kui aastane sääst on 50 €. Neist "+c0+" teeks seda ka sama hinnaga, kui kaitse paraneb.</p><p>"+(over?vn(over)+" ootab 100 € või suuremat säästu.":"Keegi ei nõudnud 100 € või suuremat säästu.")+(noSwitch?" "+vn(noSwitch)+" ei sooviks kindlustust üldse vahetada.":"")+"</p>";
+
+// ootuste ja takistuste tulbad
+var mix=cnt(function(r){return has(r.bar,"Miski ei takistaks")&&has(r.bar,", ")});
+var pure=R.filter(function(r){return r.bar.trim()==="Miski ei takistaks"});
+$("ledeBars").textContent="Mõlemas küsimuses sai valida mitu vastust. Tulba pikkus näitab osa "+N+" vastajast."+(mix?" "+vn(mix)+" valis „miski ei takistaks“ koos mõne teise takistusega.":"");
+[["Mis on pakkumise juures kõige olulisem?",imp],["Mis võiks liitumist takistada?",bars]].forEach(function(c){
+  var card=el("div","card");card.appendChild(el("h3","",c[0]));card.appendChild(el("p","sub","Vastajate arv ja osa kõigist"));
+  var rows=el("div","rows");
+  c[1].forEach(function(d,i){
+    var r=el("div","row"+(i===0?" top":""));r.title=d.label+": "+vn(d.n)+" "+N+"-st ("+pct(d.n)+"%)";
+    r.appendChild(el("span","",d.label));
+    var n=el("span","n",d.n);n.appendChild(el("small","",pct(d.n)+"%"));r.appendChild(n);
+    var t=el("div","t"),b=el("i");b.style.width=(d.n/N*100)+"%";b.style.animationDelay=(i*70)+"ms";t.appendChild(b);r.appendChild(t);
+    rows.appendChild(r);
+  });
+  card.appendChild(rows);$("bars").appendChild(card);
+});
+
+// kanalite maatriks
+var lab={1:"esimesel võimalusel",2:"3 kuu jooksul",3:"4–12 kuu jooksul",4:"hiljem kui aasta pärast",5:"ei oska öelda"};
+[1,2,3,4,5].forEach(function(t){var s=el("span");s.appendChild(el("i","d"+t));s.appendChild(el("b","",cnt(function(r){return r.t===t})));s.appendChild(document.createTextNode(lab[t]));$("mkey").appendChild(s)});
+var bank=R.filter(function(r){return r.ch==="p"});
+[["o","Otse kindlustusseltsist"],["p","Panga kaudu, koos kodulaenuga"],["m","Kindlustusmaakleri kaudu"],["x","Kodukindlustust ei ole"]].map(function(c){return {name:c[1],rows:R.filter(function(r){return r.ch===c[0]})}}).filter(function(c){return c.rows.length}).sort(function(a,b){return b.rows.length-a.rows.length}).forEach(function(c,k){
+  var row=el("div","ch"),a=el("div");a.appendChild(el("strong","",c.name));
+  a.appendChild(el("small","",vn(c.rows.length)+" · "+cnt(function(r){return r.i==="k"},c.rows)+" „jah, kindlasti“"));row.appendChild(a);
+  var dots=el("div","dots");
+  c.rows.slice().sort(function(x,z){return x.t-z.t}).forEach(function(r,i){var d=el("i","d"+r.t);d.title=lab[r.t];d.style.animationDelay=Math.min(k*150+i*40,1200)+"ms";dots.appendChild(d)});
+  row.appendChild(dots);
+  var tb=realBars(c.rows)[0],p=el("p");
+  p.appendChild(el("b","",cnt(function(r){return r.t<=2},c.rows)+" liituks kolme kuu jooksul"));
+  p.appendChild(document.createTextNode(", "+cnt(function(r){return r.t===5},c.rows)+" ei oska aega öelda."+(tb&&tb.n?" Sagedasim takistus: "+tb.say+" ("+tb.n+").":"")));
+  row.appendChild(p);$("matrix").appendChild(row);
+});
+
+// kolmeaastane sidumine
+var sid=barN("siduda");
+$("h2commit").textContent=co?"Kolmeaastane sidumine sobib "+pct(cj+cp)+"%-le vastajatest":"Kolm aastat ei hirmuta kedagi";
+$("ledeCommit").textContent=(co?vn(co)+" ei oleks valmis end kolmeks aastaks siduma. ":"Ükski vastaja ei öelnud „ei“. ")+(sid?vn(sid)+" märkis siiski takistusena, et ei soovi end pikalt siduda.":"");
+$("subCommit").textContent="Vastajate arv, kokku "+N;
+[[cj,"jah","y"],[cp,"pigem jah","m"],[co,"pigem ei või ei","o"]].forEach(function(s){
+  if(!s[0])return;var d=el("div",s[2]);d.style.flex=s[0];d.title=s[1]+": "+vn(s[0])+" ("+pct(s[0])+"%)";d.appendChild(el("b","",s[0]));d.appendChild(document.createTextNode(s[1]));$("split").appendChild(d);
+});
+
+// järeldused
+var later=N-q3,pureStrong=cnt(function(r){return r.i==="k"&&r.c==="j"},pure);
+var cards=[
+ [imp[0].n,"+ "+imp[1].n,"Üks ootus üksi ei piisa",imp[0].label+": "+imp[0].n+", "+imp[1].say+": "+imp[1].n+", "+imp[2].say+": "+imp[2].n+". Ainult ühele neist ehitatud pakkumine jätaks suure osa ootustest katmata."],
+ [barN("liiga väike"),"/"+N,"Sääst tuleb numbrina välja öelda",vn(barN("liiga väike"))+" kardab, et sääst jääb liiga väikeseks. See takistus kaob või kinnitub alles siis, kui pakkumisel on konkreetne hind."],
+ [barN("Kahtlen"),"/"+N,"Usaldus tingimuste vastu tuleb teenida",vn(barN("Kahtlen"))+" kahtleb uue kindlustuse tingimustes või kahjukäsitluses. Vaja on selget tingimuste võrdlust ja tuntud kahjukäsitlejat."],
+ [pure.length,"/"+N,"Need liikmed on kohe valmis",vn(pure.length)+" ei näe ühtegi takistust. Neist "+pureStrong+" vastas „jah, kindlasti“ ja „jah“ kolmele aastale."]
+];
+if(bank.length)cards.push([cnt(function(r){return r.t===5},bank),"/"+bank.length,"Pangakliendid vajavad juhist","Pangaklientidest ("+bank.length+") ei oska "+cnt(function(r){return r.t===5},bank)+" liitumise aega öelda ja "+cnt(function(r){return has(r.bar,"kodulaenuga")},bank)+" peab kodulaenu takistuseks. Neile on vaja kirjeldust, kuidas kindlustust laenu kõrvalt vahetada."]);
+cards.push([later,"/"+N,"Liitumisaken peab olema pikk","Kolme kuu jooksul saaks liituda "+vn(q3)+". Ülejäänud "+later+" liituks hiljem või ei tea oma lepingu lõppu."]);
+cards.forEach(function(c){
+  var f=el("div","f"),b=el("b","num",c[0]);b.appendChild(el("small",""," "+c[1]));f.appendChild(b);f.appendChild(el("h3","",c[2]));f.appendChild(el("p","",c[3]));$("find").appendChild(f);
+});
+
+// märkus
+var mem=cnt(function(r){return r.member});
+$("note").appendChild(el("b","","Valim on väike ja isevalikuline"));
+$("note").appendChild(document.createTextNode(N+" vastust näitavad suunda, mitte osakaale. Küsimus oli hüpoteetiline, seega on tegelik liitumine tõenäoliselt väiksem kui väljendatud huvi. Tuleva liikmeid on vastajate seas "+mem+", ülejäänud "+(N-mem)+" kaalub liitumist või ei ole liige."));
+}
+
+// Otseühendus tabeliga. Töötab ainult siis, kui tabel on jagatud seadega „igaüks, kellel on link – vaataja“.
+var SHEET_ID="1QFQ9sS2DQVjZQEYh5nSwn0bdELaeChOjMJlS3LeJLdE",SHEET_GID="2088544934",REFRESH_MS=30000;
+var shown=0,isLive=false,seq=0;
+function show(rows,live){
+  if(rows.length===shown&&live===isLive)return;
+  shown=rows.length;isLive=live;render(rows,live);
+}
+function cell(c){
+  if(!c||c.v==null)return "";
+  if(c.f)return String(c.f);
+  var m=/^Date\((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)/.exec(c.v);
+  function p(n){return (n<10?"0":"")+n}
+  return m?p(+m[3])+"/"+p(+m[2]+1)+"/"+m[1]+" "+p(+m[4])+":"+p(+m[5])+":"+p(+m[6]):String(c.v);
+}
+function load(){
+  var cb="__sheet"+(++seq),s=document.createElement("script"),done=false;
+  function finish(rows){
+    if(done)return;done=true;clearTimeout(timer);delete window[cb];s.remove();
+    if(rows&&rows.length)show(rows,true);
+    else if(!isLive)show(FALLBACK,false);
+  }
+  var timer=setTimeout(function(){finish(null)},8000);
+  window[cb]=function(res){
+    if(!res||res.status!=="ok"||!res.table){finish(null);return}
+    finish(res.table.rows.map(function(r){return r.c.slice(0,9).map(cell)}).filter(function(r){return r[3]}));
+  };
+  s.onerror=function(){finish(null)};
+  s.src="https://docs.google.com/spreadsheets/d/"+SHEET_ID+"/gviz/tq?gid="+SHEET_GID+"&headers=1&tq="+encodeURIComponent("select A,B,C,D,E,F,G,H,I")+"&tqx=responseHandler:"+cb+"&_="+Date.now();
+  document.head.appendChild(s);
+}
+load();
+setInterval(function(){if(!document.hidden)load()},REFRESH_MS);
+document.addEventListener("visibilitychange",function(){if(!document.hidden)load()});
+</script>
+</body></html>
